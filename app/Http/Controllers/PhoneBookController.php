@@ -23,7 +23,9 @@ class PhoneBookController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @param  Request  $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store( Request $request ) {
         PhoneBook::create( $request->all() );
@@ -34,27 +36,25 @@ class PhoneBookController extends Controller {
     /**
      * Display the specified resource.
      */
-    public function show( $id ) {
-        $contact = PhoneBook::find( $id );
-
-        return view( 'phone-book.show', compact( 'contact' ) );
+    public function show( PhoneBook $phoneBook ) {
+        return view( 'phone-book.show', compact( 'phoneBook' ) );
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( $id ) {
-        $contact = PhoneBook::find( $id );
-
-        return view( 'phone-book.edit', compact( 'contact' ) );
+    public function edit( PhoneBook $phoneBook ) {
+        return view( 'phone-book.edit', compact( 'phoneBook' ) );
     }
 
     /**
-     * Update the specified resource in storage.
+     * @param  Request  $request
+     * @param  PhoneBook  $phoneBook
+     *
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update( Request $request, $id ) {
-        $contact = PhoneBook::find( $id );
-        $contact->update( $request->all() );
+    public function update( Request $request, PhoneBook $phoneBook ) {
+        $phoneBook->update( $request->all() );
 
         return redirect()->route( 'phone-book.index' );
     }
@@ -62,9 +62,9 @@ class PhoneBookController extends Controller {
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $id ) {
-        $contact = PhoneBook::find( $id );
-        $contact->delete();
+    public function destroy( PhoneBook $phoneBook ) {
+        $phoneBook->delete();
+
         return redirect()->route( 'phone-book.index' );
     }
 }
