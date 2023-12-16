@@ -1,0 +1,12 @@
+
+> make model with migration
+
+php artisan make:model PhoneBook -m
+
+> make Controller
+
+php artisan make:controller PhoneBookController -r
+
+> short form make Model, Migration, Controller, Seeder
+
+php artisan make:model PhoneBook -rsm
