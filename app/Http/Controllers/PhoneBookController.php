@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PhoneBookRequest;
 use App\Models\PhoneBook;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class PhoneBookController extends Controller {
@@ -23,12 +25,19 @@ class PhoneBookController extends Controller {
     }
 
     /**
-     * @param  Request  $request
+     * @param  PhoneBookRequest  $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function store( Request $request ) {
+    public function store( PhoneBookRequest $request ) {
+        //$this->validate( $request, [
+        //    'name'  => 'required|min:3|max:50',
+        //    'phone' => 'required|digits:11|numeric',
+        //] );
+
         PhoneBook::create( $request->all() );
+        session()->flash( 'msg', 'Contact Created Successfully' );
+        session()->flash( 'class', 'success' );
 
         return redirect()->route( 'phone-book.index' );
     }
@@ -48,13 +57,20 @@ class PhoneBookController extends Controller {
     }
 
     /**
-     * @param  Request  $request
+     * @param  PhoneBookRequest  $request
      * @param  PhoneBook  $phoneBook
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update( Request $request, PhoneBook $phoneBook ) {
+        $this->validate( $request, [
+            'name'  => 'required|min:3|max:50',
+            'phone' => 'required|digits:11|numeric|unique:phone_books,phone,' . $phoneBook->id,
+        ] );
+
         $phoneBook->update( $request->all() );
+        session()->flash( 'msg', 'Contact Updated Successfully' );
+        session()->flash( 'class', 'info' );
 
         return redirect()->route( 'phone-book.index' );
     }
@@ -64,6 +80,8 @@ class PhoneBookController extends Controller {
      */
     public function destroy( PhoneBook $phoneBook ) {
         $phoneBook->delete();
+        session()->flash( 'msg', 'Contact Deleted Successfully' );
+        session()->flash( 'class', 'danger' );
 
         return redirect()->route( 'phone-book.index' );
     }

@@ -12,3 +12,7 @@ php artisan make:controller PhoneBookController -r
 php artisan make:model PhoneBook -rsm
 
 php artisan route:list
+
+> make custom request
+
+php artisan make:request PhoneBookRequest

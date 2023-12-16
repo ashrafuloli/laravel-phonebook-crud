@@ -13,6 +13,12 @@
             </div>
         </div>
         <div class="card-body">
+            @if(session()->has('msg'))
+                <div class="alert alert-{{session('class')}}">
+                    {!! session('msg') !!}
+                </div>
+            @endif
+
             <table class="table table-striped table-bordered align-middle">
                 <thead class="table-dark">
                 <tr>

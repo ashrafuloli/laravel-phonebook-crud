@@ -13,6 +13,17 @@
             </div>
         </div>
         <div class="card-body">
+{{--            @if($errors->any())--}}
+{{--                <div class="alert alert-danger">--}}
+{{--                    <ul class="mb-0">--}}
+{{--                        @foreach($errors->all() as $error)--}}
+{{--                            <li>{{$error}}</li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            @endif--}}
+
+
             {!! Form::open(['method'=>'post', 'route' => 'phone-book.store']) !!}
 
             @include('phone-book.form')
