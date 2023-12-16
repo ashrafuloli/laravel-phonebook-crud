@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PhoneBookRequest;
 use App\Models\PhoneBook;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class PhoneBookController extends Controller {
     /**
@@ -36,6 +35,7 @@ class PhoneBookController extends Controller {
         //] );
 
         PhoneBook::create( $request->all() );
+
         session()->flash( 'msg', 'Contact Created Successfully' );
         session()->flash( 'class', 'success' );
 
@@ -62,13 +62,9 @@ class PhoneBookController extends Controller {
      *
      * @return RedirectResponse
      */
-    public function update( Request $request, PhoneBook $phoneBook ) {
-        $this->validate( $request, [
-            'name'  => 'required|min:3|max:50',
-            'phone' => 'required|digits:11|numeric|unique:phone_books,phone,' . $phoneBook->id,
-        ] );
-
+    public function update( PhoneBookRequest $request, PhoneBook $phoneBook ) {
         $phoneBook->update( $request->all() );
+
         session()->flash( 'msg', 'Contact Updated Successfully' );
         session()->flash( 'class', 'info' );
 
